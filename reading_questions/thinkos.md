@@ -5,18 +5,38 @@
 
 1) Give an example of a feature common in interpreted languages that is rare in compiled languages.
 
+Memory allocation can be more efficient because you allocate things just in time, also running them is 
+platform independent. Debugging is different as well, because code that doesn't run and code that runs but 
+doesn't behave as expected are seen in the same step.
+
 2) Name two advantages of static typing over dynamic typing.
+
+Your language has built in protections against doing things you shouldn't, which might end up with your code
+compiling/running but not doing what it should. It can also be faster because the memory is allocated 
+beforehand.
 
 3) Give an example of a static semantic error.
 
+Trying to add to a variable before giving it a value.
+
 4) What are two reasons you might want to turn off code optimization?
 
+Trying to debug assembly code and wanting it readable, you want to do something a little bit sketchy that you
+think the compiler will try to optimize out. 
+
 5) When you run `gcc` with `-S`, why might the results look different on different computers?
+
+Because assembly is a way to talk to the machine, so different machine architecture requires different assembly.
 
 6) If you spell a variable name wrong, or if you spell a function name wrong, 
 the error messages you get might look very different.  Why?
 
+Because they are caught in two different steps. Variables fail during compile time (generating assembly, defining 
+memory locations), functions fail during link time (figuring out how the pieces fit together).
+
 7) What is a segmentation fault?
+
+It occurs when a program tries to read or write to the wrong kind of memory, for example writing to read-only memory.
 
 
 ## Chapter 2
@@ -26,13 +46,26 @@ the error messages you get might look very different.  Why?
 
 1) Give a real-world example of virtualization (ideally not one of the ones in the book).
 
+Routers aren't actually connected to that much, but since those other routers are connected to other routers it gives 
+the appearance that every machine is connected to every other one through the internet.
+
 2) What is the difference between a program and a process?
+
+A program is a piece of code that can be run, a process is a running program and all the associated data.
 
 3) What is the primary purpose of the process abstraction?  What illusion does the process abstraction create?
 
+The illusion is that the process has uninterrupted CPU time and unlimited, continuous memory space, neither of which are
+true. The goal is so that the user doesn't have to worry about how different processes interact with eachother.
+
 4) What is the kernel?
 
+The core of a computer's operating system. It mediates access to the computer's resources, which includes deciding who gets
+access to the processors and RAM, and dealing with requests to input/output devices. 
+
 5) What is a daemon?
+
+A friendly process that runs in the background.
  
 
 ## Chapter 3
@@ -42,26 +75,64 @@ the error messages you get might look very different.  Why?
 
 1) The Georgian alphabet has 33 letters.  How many bit are needed to specify a letter?
 
+6, because it's less that 64 and more than 32, so 2^6 options are required.
+
 2) In the UTF-16 character encoding, the binary representation of a character can take up to 32 bits.  
 Ignoring the details of the encoding scheme, how many different characters can be represented?
 
+2^32, or about 4 billion characters.
+
 3) What is the difference between "memory" and "storage" as defined in Think OS?
+
+Memory is volatile, storage is not.
 
 4) What is the difference between a GiB and a GB?  What is the percentage difference in their sizes?
 
+A Gib is a binary unit (2^30 bytes), while a GB is a base 10 unit (10^9 bytes). They are fairly similar in size,
+but a Gib is about 7% larger.
+
 5) How does the virtual memory system help isolate processes from each other?
+
+Because a process can't generate the virtual address that maps to the physical address another process has used.
+It's done on a pre-process basis, so the processes don't run into eachother. 
 
 6) Why do you think the stack and the heap are usually located at opposite ends of the address space?
 
+So that you don't have to have an idea of how big the stack will be in order to start the heap. They only run into
+eachother in the middle, or when all of the space is taken up anyway. 
+
 7) What Python data structure would you use to represent a sparse array?
+
+I think there's a scipy object that does this...
 
 8) What is a context switch?
 
+When an OS stops a running process, saves its state, and then runs another process.
+
 In this directory, you should find a subdirectory named `aspace` that contains `aspace.c`.  Run it on your computer and compare your results to mine.
+
+My results:
+
+Address of main is 0x4005d6
+Address of global is 0x60104c
+Address of local is 0x7ffd2d9bec4c
+Address of p is 0x989010
+
+Mine are relatively similar, p is a little lower (my heap was able to give it a lower value) but they're generally similar.
   
 1) Add a second call to `malloc` and check whether the heap on your system grows up (toward larger addresses).  
 
+Address of p is 0x1362010
+Address of q is 0x13620a0
+
+The second call to malloc has increased by 0x10 (1 -> a in the 10's place)
+
 2) Add a function that prints the address of a local variable, and check whether the stack grows down.  
+
+Address of local is   0x7fff429c2090
+Address of local_2 is 0x7fff429c2094
+
+It's actually slightly higher. I don't know why that is.
 
 3) Choose a random number between 1 and 32, and allocate two chunks with that size.  
 How much space is there between them?  Hint: Google knows how to subtract hexadecimal numbers.
