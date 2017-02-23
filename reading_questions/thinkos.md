@@ -146,19 +146,34 @@ How much space is there between them?  Hint: Google knows how to subtract hexade
 1) What abstractions do file systems provide?  Give an example of something that is logically 
 true about files systems but not true of their implementations.
 
+The file system is a mapping between a file name and its contents, which are bytes. In reality, storage is block-based.
+
 2) What information do you imagine is stored in an `OpenFileTableEntry`?
 
+What information has been given to the program from the file, what information has been requested, how many times it has been requested.
+
 3) What are some of the ways operating systems deal with the relatively slow performance of persistent storage?
+
+When they get a call, they might get more than they needed to so that if a program asks for the next block as well it can get that easily, they keep things that have been called recently in a cache, and they use buffering, where they don't write to storage immediately, they keep it in memory for a while.
 
 4) Suppose your program writes a file and prints a message indicating that it is done writing.  
 Then a power cut crashes your computer.  After you restore power and reboot the computer, you find that the 
 file you wrote is not there.  What happened?
 
+It was still in the buffer when the computer crashed, so even though it said it was done writing it was still in memory, not storage.
+
 5) Can you think of one advantage of a File Allocation Table over a UNIX inode?  Or an advantage of a inode over a FAT?
+
+An inode doesn't work very well for very large files. However, you might want to use one in situations where you need a lot of speed, because inode is better for that.
 
 6) What is overhead?  What is fragmentation?
 
+Overhead is the parts of the storage that aren't the file itself, ie the data structures which probably include some pointers to other blocks, etc. 
+Fragmentation is unused space in blocks, due to them being unused or partially used.
+
 7) Why is the "everything is a file" principle a good idea?  Why might it be a bad idea?
+
+It works pretty well because bytes make more sense to people than blocks do.
 
 If you would like to learn more about file systems, a good next step is to learn about journaling file systems.  
 Start with [this Wikipedia article](https://en.wikipedia.org/wiki/Journaling_file_system), then 
@@ -174,11 +189,17 @@ Also consider reading [this USENIX paper](https://www.usenix.org/legacy/event/us
 1) Suppose you have the value 128 stored as an unsigned 8-bit number.  What happens if you convert 
 it to a 16-bit number and accidentally apply sign extension?
 
+You start with 1000 0000, then if you accidentally use sign extension you get 1111 1111 1000 0000, which might be evaluated as -127.
+
 2) Write a C expression that computes the two's complement of 12 using the XOR bitwise operator. 
 Try it out and confirm that the result is interpreted as -12.
 
+(12 ^ 15) + 1
+
 3) Can you guess why IEEE floating-point uses biased integers to represent the exponent rather than a
 sign bit or two's complement?
+
+
 
 4) Following the example in Section 5.4, write the 32-bit binary representation of -13 in single precision 
 IEEE floating-point.  What would you get if you accidentally interpreted this value as an integer?
