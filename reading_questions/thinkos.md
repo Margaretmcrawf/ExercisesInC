@@ -199,14 +199,36 @@ Try it out and confirm that the result is interpreted as -12.
 3) Can you guess why IEEE floating-point uses biased integers to represent the exponent rather than a
 sign bit or two's complement?
 
-
+Probably because an overflow error would be really annoying in that case, so it's safer to just have a bias.
 
 4) Following the example in Section 5.4, write the 32-bit binary representation of -13 in single precision 
 IEEE floating-point.  What would you get if you accidentally interpreted this value as an integer?
 
+1  -> 1
+
+130 -> 1000 0010 
+
+0x500000 -> 101 0000 0000 0000 0000 0000
+
+1100 0001 0101 0000 0000 0000 0000 0000
+
+If this was read as a signed integer it would be -1095761920
+
 5) Write a function that takes a string and converts from lower-case to upper-case by flipping the sixth bit.  
 As a challenge, you can make a faster version by reading the string 32 or 64 bits at a time, rather than one
 character at a time.  This optimization is made easier if the length of the string is a multiple of 4 or 8 bytes.
+
+```c
+
+char[] toUppercase(char *string, int len) {
+	for (int i = 0; i < len; i++) {
+		char character = string[i];
+		string[i] = character ^ 32;
+}
+	return string;
+}
+
+```
 
 
 
