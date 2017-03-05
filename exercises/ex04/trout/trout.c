@@ -1,4 +1,7 @@
-#include "send_probes.c"
+#include "send_probes.h"
+#include "recv_dgram.h"
+#include "print_report.h"
+#include "trout.h"
 
 /* NOTES: system calls beginning with a capital letter are Stevens's
    wrapper functions.  Each one invokes the method and checks the

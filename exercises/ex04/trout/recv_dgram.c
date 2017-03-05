@@ -1,4 +1,5 @@
 #include "trout.h"
+#include "recv_dram.h"
 
 int max_ttl = 30;
 int nprobes = 2;

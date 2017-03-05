@@ -239,17 +239,25 @@ char[] toUppercase(char *string, int len) {
 
 1) Which memory management functions would you expect to take constant time?  Which ones take time proportional to the size of the allocated chunk?
 
+Malloc is apparently not dependent on the size of the chunk, so it must be constant. Realloc and calloc are proportional to the size of the chunk.
+
 2) For each of the following memory errors, give an example of something that might go wrong:
 
 a) Reading from unallocated memory.
 
+This could be a segfault, but it could also read whatever's there and find out later that it's the wrong type.
+
 b) Writing to unallocated memory.
+
+This might eventually be detected when you find out you've written over some previously allocated piece of memory.
 
 c) Reading from a freed chunk.
 
 d) Writing to a freed chunk.
 
 e) Failing to free a chunk that is no longer needed.
+
+Memory leaks could occur if it is a program that runs for a long time. Eventually you could run out of physical memory and start writing to disk, then run out of virtual memory too.
 
 
 3) Run
@@ -259,7 +267,11 @@ e) Failing to free a chunk that is no longer needed.
 to see a list of processes sorted by RSS, which is "resident set size", the amount of physical 
 memory a process has.  Which processes are using the most memory?
 
+My browser is using the most memory right now, although my text editor is also up there.
+
 4) What's wrong with allocating a large number of small chunks?  What can you do to mitigate the problem?
+
+The overhead for boundary tags etc. gets really big if you have many small chunks.
 
 If you want to know more about how malloc works, read 
 [Doug Lea's paper about dlmalloc](http://gee.cs.oswego.edu/dl/html/malloc.html)

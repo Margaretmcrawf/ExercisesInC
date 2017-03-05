@@ -1,5 +1,6 @@
-#include "recv_dgram.c"
-#include "print_report.c"
+#include "recv_dgram.h"
+#include "print_report.h"
+#include "send_probes.h"
 
 
 /* send_dgram: generate an outgoing UDP packet */
