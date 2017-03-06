@@ -2,6 +2,18 @@
 
     Copyright 2016 Allen B. Downey
     License: MIT License https://opensource.org/licenses/MIT
+
+    Results on Margo's computer: 
+    248.000000 ms    dummy
+    860.000000 ms    dummy2
+    848.000000 ms    random_float
+    896.000000 ms    my_random_float
+    2092.000000 ms   my_random_float2
+    828.000000 ms    random_float
+
+    random_float is the fastest non-dummy random number generator by a hair. However, all are
+    pretty close with the exception of my_random_float2 which is really really slow.
+
 */
 
 #include <stdio.h>

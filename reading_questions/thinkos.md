@@ -253,7 +253,11 @@ This might eventually be detected when you find out you've written over some pre
 
 c) Reading from a freed chunk.
 
+The chunk might have been reallocated, so you could read that chunk instead.
+
 d) Writing to a freed chunk.
+
+The chunk might have been reallocated, so when you write to it you overwrite the other information that had been put there.
 
 e) Failing to free a chunk that is no longer needed.
 
