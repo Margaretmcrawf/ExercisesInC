@@ -78,19 +78,20 @@ float my_random_float2()
 // compute a random double using my algorithm
 double my_random_double()
 {
-	int x;
+	long int x;
   int mant;
-  int exp = 126;
+  int exp = 1022; //the bias of a double is 1023 instead of 127.
   int mask = 1;
 
   union {
     double d;
-    int i;
+    long int i;
   } b;
 
   // generate random bits until we see the first set bit
   while (1) {
-    x = random(); //this is only 32 bits, and we need 64...
+    x = random(); //x will be a random int of 31 bits (half of what we want)
+
     if (x == 0) {
       exp -= 31;
     } else {
@@ -104,13 +105,13 @@ double my_random_double()
     exp--;
   }
 
-  y = random();
+  long int y = random();
   // use the remaining bit as the mantissa
   mant = x >> 11;
-  mant = 
+  mant = mant | y;
   b.i = (exp << 52) | mant;
 
-  return b.f;
+  return b.d;
 
 }
 

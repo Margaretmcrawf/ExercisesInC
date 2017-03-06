@@ -55,6 +55,7 @@ void print_list(Node **list) {
  */
 int pop(Node **list) {
     // FILL THIS IN!
+    
     return 0;
 }
 
@@ -66,6 +67,8 @@ int pop(Node **list) {
  */
 void push(Node **list, int val) {
     // FILL THIS IN!
+    Node* head = **list;
+    Node* newval = make_node(val, head);
 }
 
 
