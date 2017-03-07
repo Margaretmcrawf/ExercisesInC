@@ -79,9 +79,9 @@ float my_random_float2()
 double my_random_double()
 {
 	long int x;
-  int mant;
-  int exp = 1022; //the bias of a double is 1023 instead of 127.
-  int mask = 1;
+  long int mant;
+  long int exp = 1022; //the bias of a double is 1023 instead of 127.
+  long int mask = 1;
 
   union {
     double d;
@@ -90,7 +90,10 @@ double my_random_double()
 
   // generate random bits until we see the first set bit
   while (1) {
-    x = random(); //x will be a random int of 31 bits (half of what we want)
+    x = random();
+    x <<= 32;
+    long int p = random();
+    x = x|p;
 
     if (x == 0) {
       exp -= 31;
@@ -105,10 +108,8 @@ double my_random_double()
     exp--;
   }
 
-  long int y = random();
   // use the remaining bit as the mantissa
   mant = x >> 11;
-  mant = mant | y;
   b.i = (exp << 52) | mant;
 
   return b.d;
