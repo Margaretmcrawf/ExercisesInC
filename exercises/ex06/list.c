@@ -79,7 +79,7 @@ int pop(Node **list) {
 void push(Node **list, int val) {
 
     Node* newNode = make_node(val, *list);
-    //*list = newNode;
+    *list = newNode;
 }
 
 
@@ -123,7 +123,6 @@ int remove_by_value(Node **list, int val) {
  * list: pointer to pointer to Node
  */
 void reverse(Node **list) {
-    // FILL THIS IN!
 
     if ((*list)->next == NULL) { //only got one element
         return;
@@ -135,6 +134,7 @@ void reverse(Node **list) {
         *list = return_node;
         return;
     }
+
     Node* prevVal = *list;
     Node* currentVal = (*list)->next;
     Node* nextVal = (*list)->next->next;
@@ -147,6 +147,7 @@ void reverse(Node **list) {
         currentVal = nextVal;
         nextVal = nextVal->next;
     }
+    currentVal->next = prevVal;
     nextVal->next = currentVal;
     *list = nextVal;
 }
