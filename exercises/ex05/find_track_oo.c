@@ -33,6 +33,10 @@ typedef struct {
  */
 Regex *make_regex(char *pattern, int flags) {
     // FILL THIS IN!
+
+    Regex reg = malloc(sizeof(Regex));
+    reg->inner_struct = 
+
     return NULL;
 }
 
@@ -44,6 +48,7 @@ Regex *make_regex(char *pattern, int flags) {
  */
 int regex_match(Regex *regex, char *s) {
     // FILL THIS IN!
+
     return 0;
 }
 
