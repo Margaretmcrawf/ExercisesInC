@@ -1,1 +1,6 @@
-0
+ex03.md
+mytee
+mytee.c
+output.txt
+testfile
+testfile.c
