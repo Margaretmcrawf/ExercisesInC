@@ -8,9 +8,14 @@
 int main(int argc, char *argv[]) {
 
  	FILE *fp;
- 	fp = fopen(argv[1], "w"); //assuming argv[1] is the filename...
- 	fprintf(fp, "%s", argv[2]);
+ 	fp = fopen(argv[1], "w");
 
- 	printf("%s", argv[2]);
+ 	char input[80];
+ 	scanf("%79s", input);
+
+ 	fprintf(fp, "%s", input);
+
+ 	printf("%s", input);
+ 	return 0;
 
 }
