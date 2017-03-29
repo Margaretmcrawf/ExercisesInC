@@ -179,6 +179,7 @@ int hash_hashable(Hashable *hashable)
  */
 int equal_int (void *ip, void *jp)
 {
+    printf("hit int\n");
     int i = *(int*) ip;
     int j = *(int*) jp;
     if (j == i) {
@@ -200,6 +201,9 @@ int equal_string (void *s1, void *s2)
 {
     char** str_1 = (char**) s1;
     char** str_2 = (char**) s2;
+    printf("hit string\n");
+    printf("%s", *str_1);
+    printf("%s", *str_2);
     int comparison = strcmp(*str_1, *str_2);
     if (comparison == 0) {
         return 1;
@@ -219,7 +223,8 @@ int equal_string (void *s1, void *s2)
  */
 int equal_hashable(Hashable *h1, Hashable *h2)
 {
-    return h1->equal (h1->key, h2->key);
+    int equal = h1->equal (h1->key, h2->key);
+    return equal;
 }
 
 
@@ -307,7 +312,6 @@ Node *prepend(Hashable *key, Value *value, Node *rest)
 /* Looks up a key and returns the corresponding value, or NULL */
 Value *list_lookup(Node *list, Hashable *key)
 {
-    // FILL THIS IN!
     while (list != NULL) {
         if (equal_hashable(list->key, key)) {
             return list->value;
@@ -358,14 +362,22 @@ void print_map(Map *map)
 /* Adds a key-value pair to a map. */
 void map_add(Map *map, Hashable *key, Value *value)
 {
-    // FILL THIS IN!
+    Node* current = *map->lists;
+    Node* new_node = make_node(key, value, current);
 }
 
 
 /* Looks up a key and returns the corresponding value, or NULL. */
 Value *map_lookup(Map *map, Hashable *key)
 {
-    // FILL THIS IN!
+    Node* current = *map->lists;
+    while (current != NULL) {
+        Value* val = list_lookup(current, key);
+        if (val != NULL) {
+            return val;
+        }
+        current = current->next;
+    }
     return NULL;
 }
 
@@ -386,15 +398,18 @@ int main ()
     Hashable *hashable3 = make_hashable_int (2);
 
     // make a list by hand
+    printf("Node 1\n");
     Value *value1 = make_int_value (17);
     Node *node1 = make_node(hashable1, value1, NULL);
     print_node (node1);
 
+    printf("List\n");
     Value *value2 = make_string_value ("Orange");
     Node *list = prepend(hashable2, value2, node1);
     print_list (list);
 
     // run some test lookups
+    printf("Test lookup\n");
     Value *value = list_lookup (list, hashable1);
     print_lookup(value);
 
