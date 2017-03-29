@@ -284,28 +284,45 @@ If you want to know more about how malloc works, read
 
 ## Chapter 7
 
-
 ### Caching
 
 1) What happens if a program writes a new value into the program counter?
 
+That value will be the next address that the computer will look for the next instruction at. This will either result in not being able to find anything there or finding the wrong thing there.
+
 2) What is the fundamental problem caches are meant to solve?
+
+Most of the instructions that computers get are loading ones, so it aims to make loading values easier and quicker.
 
 3) If cache access time is 1 ns and memory access time is 10 ns, what is the average
 access time of a program with hit rate 50%?  How about 90%?
+
+5.5 ns
+
+1.9 ns
 
 4) The book gives several examples of programming language features, like loops, that tend 
 to improve locality in the access pattern of instructions and/or data.  Can you think of other examples?  
 Or counter-examples that might decrease locality?
 
+Defining variables in the same section of the program could help improve locality. 
+
 5)  If you refactor a program to improve locality, would you say the program is "cache aware"?  Why not?
+
+No, because it isn't taking into account all of the hardware specifications of the system. It is not looking at the cache size or block size in the design.
 
 6) See if you can estimate the cost of a memory cache by comparing the prices of two similar CPUs with 
 different cache sizes.
 
+I had a hard time finding two similar enough CPUs in other ways with different cache sizes.
+
 7) Why are cache policies generally more complex at the bottom of the memory hierarchy?
 
+Because there is more time to make decisions when things are moved explicitly by administators, so a well designed policy is more important.
+
 8) Can you think of a strategy operating systems could use to avoid thrashing or recover when it occurs?
+
+They could detect and interrupt the processes that are thrashing, and inform the user of the issue, rather than just becoming unresponsive all around. 
 
 Run the cache code on your laptop or another computer and see if you can infer the cache size and block size.  
 If you can find the technical specifications for your computer, see if your inferences are right.
@@ -314,6 +331,7 @@ If you can find the technical specifications for your computer, see if your infe
 
 2) Run `python graph_data.py` to see the results.  What can you infer about the cache structure on your computer?
 
+I observed a big increase in slope at 4 MB, so I thought that might be my cache size. However, the specs say that it's 3 MB. The graph doesn't actually have a data point there, but it seems close enough to 4 to be believable.
 
 ## Chapter 8
 
@@ -322,17 +340,25 @@ If you can find the technical specifications for your computer, see if your infe
 
 1) What is the kernel's most basic task?
 
+Dealing with interrupts.
+
 2) When an interrupt occurs, what part of the hardware state is saved by hardware?
+
+The program counter.
 
 3) What is the difference between an interrupt and a context switch?
 
+When an interrupt occurs and then decides to switch to another process.
+
 4) Give an example of an event that might cause a process to move from the blocked to the ready state.
+
+A network communication went through and now the process can run.
 
 5) Why might a scheduler want to give higher priority to an I/O bound process?
 
+Because that is probably running something that is giving information to a user that needs it. Other processes might just be daemons that aren't super important anyway.
+
 When I make French toast, I usually make a batch of 12 slices.  But my griddle only has room for 8 slices.  Each piece of toast has to cook for 5 minutes on each side.  How can I schedule 12 slices onto 8 "cores" to minimize the elapsed time to cook all 12 slices?  (Note: this question is not hypothetical; this is really how I make French toast.)
-
-
 
 ## Chapter 9
 

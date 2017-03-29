@@ -3,6 +3,7 @@
 Based on an example from http://www.learn-c.org/en/Linked_lists
 
 Copyright 2016 Allen Downey
+Modified by Margo Crawford
 License: Creative Commons Attribution-ShareAlike 3.0
 
 */
