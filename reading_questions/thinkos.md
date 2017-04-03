@@ -348,7 +348,7 @@ The program counter.
 
 3) What is the difference between an interrupt and a context switch?
 
-When an interrupt occurs and then decides to switch to another process.
+An interrupt is when a process gets stopped. A context switch is when an interrupt occurs and then decides to switch to another process.
 
 4) Give an example of an event that might cause a process to move from the blocked to the ready state.
 
@@ -359,6 +359,8 @@ A network communication went through and now the process can run.
 Because that is probably running something that is giving information to a user that needs it. Other processes might just be daemons that aren't super important anyway.
 
 When I make French toast, I usually make a batch of 12 slices.  But my griddle only has room for 8 slices.  Each piece of toast has to cook for 5 minutes on each side.  How can I schedule 12 slices onto 8 "cores" to minimize the elapsed time to cook all 12 slices?  (Note: this question is not hypothetical; this is really how I make French toast.)
+
+Cook 8 slices for the first 5 minutes, then remove half and flip the other half, and put four more on. Then flip the half with one side cooked and remove the fully cooked half, then add back the half that got half cooked. This takes 15 minutes.
 
 ## Chapter 9
 

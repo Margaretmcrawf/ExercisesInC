@@ -201,7 +201,7 @@ int equal_string (void *s1, void *s2)
 {
     char** str_1 = (char**) s1;
     char** str_2 = (char**) s2;
-    printf("hit string\n");
+    printf("hit string");
     printf("%s", *str_1);
     printf("%s", *str_2);
     int comparison = strcmp(*str_1, *str_2);
