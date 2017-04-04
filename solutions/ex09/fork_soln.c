@@ -40,6 +40,7 @@ void child_code(int i)
     printf("child shared_int is %d\n", shared_int);
     *int_pointer += 1;
     printf("child int_pointer %d\n", *int_pointer);
+    printf("child adress int_pointer %p\n", int_pointer);
     exit(i);
 }
 
@@ -108,6 +109,8 @@ int main(int argc, char *argv[])
     
     printf("parent shared_int is %d\n", shared_int);
     printf("parent int_pointer %d\n", *int_pointer);
+    printf("parent address int_pointer is %p\n", int_pointer);
+
     
     exit(0);
 }

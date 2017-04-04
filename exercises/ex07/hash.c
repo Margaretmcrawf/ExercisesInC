@@ -202,8 +202,6 @@ int equal_string (void *s1, void *s2)
     char** str_1 = (char**) s1;
     char** str_2 = (char**) s2;
     printf("hit string");
-    printf("%s", *str_1);
-    printf("%s", *str_2);
     int comparison = strcmp(*str_1, *str_2);
     if (comparison == 0) {
         return 1;
@@ -211,7 +209,6 @@ int equal_string (void *s1, void *s2)
         return 0;
     }
 }
-
 
 /* Compares Hashables. 
  *
@@ -339,7 +336,7 @@ Map *make_map(int n)
     map->n = n;
     map->lists = (Node **) malloc (sizeof (Node *) * n);
     for (i=0; i<n; i++) {
-	map->lists[i] = NULL;
+	   map->lists[i] = NULL;
     }
     return map;
 }
@@ -362,8 +359,13 @@ void print_map(Map *map)
 /* Adds a key-value pair to a map. */
 void map_add(Map *map, Hashable *key, Value *value)
 {
-    Node* current = *map->lists;
-    Node* new_node = make_node(key, value, current);
+    //add it to the first empty list.
+    int i;
+    for (i=0; i<map->n; i++) {
+    if (map->lists[i] == NULL) {
+        prepend(key, value, map->lists[i]);
+    }
+    }
 }
 
 
@@ -408,15 +410,15 @@ int main ()
     Node *list = prepend(hashable2, value2, node1);
     print_list (list);
 
-    // run some test lookups
+    //run some test lookups
     printf("Test lookup\n");
-    Value *value = list_lookup (list, hashable1);
+    Value *value = list_lookup(list, hashable1);
     print_lookup(value);
 
-    value = list_lookup (list, hashable2);
+    value = list_lookup(list, hashable2);
     print_lookup(value);
 
-    value = list_lookup (list, hashable3);
+    value = list_lookup(list, hashable3);
     print_lookup(value);
 
     // make a map

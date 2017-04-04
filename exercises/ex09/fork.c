@@ -3,6 +3,43 @@
 Copyright 2016 Allen B. Downey
 License: MIT License https://opensource.org/licenses/MIT
 
+Results
+
+./fork 1
+Creating child 0.
+Hello from the parent.
+Hello from child 0.
+Child 2836 exited with error code 0.
+Elapsed time = 0.000326 seconds.
+
+./fork 2
+Creating child 0.
+Creating child 1.
+Hello from the parent.
+Hello from child 0.
+Child 2838 exited with error code 0.
+Hello from child 1.
+Child 2839 exited with error code 1.
+Elapsed time = 1.000510 seconds.
+
+./fork 3
+Creating child 0.
+Creating child 1.
+Creating child 2.
+Hello from the parent.
+Hello from child 0.
+Child 2852 exited with error code 0.
+Hello from child 1.
+Child 2853 exited with error code 1.
+Hello from child 2.
+Child 2854 exited with error code 2.
+Elapsed time = 2.000702 seconds.
+
+The parent forks a number of processes from itself and prints a message to say
+the child is created. Then the child thread runs code that prints hello from 
+the child and exits with its index as an error code, and the parent prints the
+status, which is an exit message.
+
  */
 
 #include <stdio.h>
@@ -62,19 +99,19 @@ int main(int argc, char *argv[])
       
         // create a child process
         printf("Creating child %d.\n", i);
-	pid = fork();
-      
-	/* check for an error */
-	if (pid == -1) {
-	    fprintf(stderr, "fork failed: %s\n", strerror(errno));
-	    perror(argv[0]);
-	    exit(1);
-	}
-      
-	/* see if we're the parent or the child */
-	if (pid == 0) {
-	  child_code(i);
-	}
+    	pid = fork();
+          
+    	/* check for an error */
+    	if (pid == -1) {
+    	    fprintf(stderr, "fork failed: %s\n", strerror(errno));
+    	    perror(argv[0]);
+    	    exit(1);
+    	}
+          
+    	/* see if we're the parent or the child */
+    	if (pid == 0) {
+    	  child_code(i);
+	   }
     }
     
     /* parent continues */
