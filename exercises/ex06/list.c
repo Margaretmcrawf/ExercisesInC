@@ -153,6 +153,20 @@ void reverse(Node **list) {
     *list = nextVal;
 }
 
+void insert(Node **list, int index, int val) {
+    if (index == 0) {
+        push(list, val);
+        return;
+    }
+    Node* current = *list;
+    for (int i = 0; i < index-1; i++) {
+        current = current->next;
+    }
+    Node* next = current->next;
+    Node* new_node = make_node(val, next);
+    current->next = new_node;
+}
+
 
 int main() {
     Node *head = make_node(1, NULL);
@@ -176,5 +190,8 @@ int main() {
     print_list(list);
 
     reverse(list);
+    print_list(list);
+
+    insert(list, 3, 5);
     print_list(list);
 }
