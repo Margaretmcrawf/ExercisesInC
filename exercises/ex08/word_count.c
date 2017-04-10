@@ -1,8 +1,11 @@
+/*
+This function generates and prints the frequencies of all of the words in Shakespeare's works.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <glib.h>
 #include <string.h>
-
 
 FILE * fp;
 char * line = NULL;
@@ -11,8 +14,8 @@ ssize_t read;
 char *token;
 GHashTable* hash; 
 
-void foreach_print(gpointer key, gpointer value, gpointer userdata) {
-	printf("%s : %i\n", (char *) key, GPOINTER_TO_INT(value));
+void foreach_print(gchar* key, int value, gpointer user_data) {
+	printf("%s : %i, ", key, value);
 }
 
 void increment_table(char* token) {
@@ -25,25 +28,30 @@ void increment_table(char* token) {
 			gpointer* newCountPointer = GINT_TO_POINTER(newCountInt);
 			g_hash_table_insert(hash, token, newCountPointer);
 		}
-		return;
+	printf("%s: %i, ", token, GPOINTER_TO_INT(g_hash_table_lookup(hash, token)));
 }
 
 int main() {
-	hash = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, NULL);
-	fp = fopen("shakespeare.txt", "r");
+	hash = g_hash_table_new(g_str_hash, g_str_equal);
+	fp = fopen("short_text.txt", "r");
 	char delimit[]=" \t\r\n\v\f";
+
 	while ((read = getline(&line, &len, fp)) != -1) {
+		// printf("\n");
 		token = strtok(line, delimit);
-		if ((token != NULL) && token != ""){
+		if ((token != NULL)){
+			// printf("%s, ", token);
 			increment_table(token);
 		}
 		while ( token != NULL ) {
 			token = strtok(NULL, delimit);
 			if (token != NULL) {
+				// printf("%s, ", token);
 				increment_table(token);
 			}
 		}
 	}	
-	g_hash_table_foreach(hash, foreach_print, NULL);
+	printf("\n-------\n");
+	g_hash_table_foreach(hash, (GHFunc) foreach_print, NULL);
 	return 0;
 }
