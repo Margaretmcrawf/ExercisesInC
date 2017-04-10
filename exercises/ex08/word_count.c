@@ -12,7 +12,7 @@ char *token;
 GHashTable* hash; 
 
 void foreach_print(gpointer key, gpointer value, gpointer userdata) {
-	printf("key = '%s', count = %i\n", (char *) key, GPOINTER_TO_INT(value));
+	printf("%s : %i\n", (char *) key, GPOINTER_TO_INT(value));
 }
 
 void increment_table(char* token) {
@@ -31,13 +31,14 @@ void increment_table(char* token) {
 int main() {
 	hash = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, NULL);
 	fp = fopen("shakespeare.txt", "r");
+	char delimit[]=" \t\r\n\v\f";
 	while ((read = getline(&line, &len, fp)) != -1) {
-		token = strtok(line, " ");
-		if (token != NULL) {
+		token = strtok(line, delimit);
+		if ((token != NULL) && token != ""){
 			increment_table(token);
 		}
 		while ( token != NULL ) {
-			token = strtok(NULL, " ");
+			token = strtok(NULL, delimit);
 			if (token != NULL) {
 				increment_table(token);
 			}
