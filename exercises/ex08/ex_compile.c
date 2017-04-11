@@ -11,7 +11,7 @@ What are the most important pros and cons of using GLib, as opposed to another l
 Pros: 
 Standard, open source library for lots of structures that are taken for granted in other languages.
 Cons:
-Annoying to compile because you have to tell gcc where to find it, probably hard to find the google results you want because it is so close to glibc.
+Annoying to compile because you have to tell gcc where to find it, hard to find the google results you want because it is so close to glibc, very long names for things.
 
 What do you have to do to compile and run a "Hello GLib" example?
 
