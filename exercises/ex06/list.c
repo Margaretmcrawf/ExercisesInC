@@ -125,10 +125,15 @@ int remove_by_value(Node **list, int val) {
  */
 void reverse(Node **list) {
 
+    if ((*list) == NULL) { //no elements
+        return;
+    }
+
     if ((*list)->next == NULL) { //only got one element
         return;
     }
-    if ((*list)->next->next == NULL) {
+
+    if ((*list)->next->next == NULL) { //only got two elements
         Node* return_node = (*list)->next;
         (*list)->next->next = *list;
         (*list)->next = NULL;
@@ -193,5 +198,16 @@ int main() {
     print_list(list);
 
     insert(list, 3, 5);
+    print_list(list);
+
+    pop(list);
+
+    pop(list);
+
+    pop(list);
+    pop(list);
+    print_list(list);
+
+    reverse(list);
     print_list(list);
 }

@@ -3,3 +3,6 @@ ex_compile: ex_compile.c
 
 word_count: word_count.c
 	gcc -ggdb word_count.c -o word_count `pkg-config --cflags --libs glib-2.0`
+
+testing: testing.c
+	gcc testing.c -o testing `pkg-config --cflags --libs glib-2.0`
