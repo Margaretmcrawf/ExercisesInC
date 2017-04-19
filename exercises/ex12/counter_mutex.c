@@ -1,6 +1,9 @@
 /*     This file contains an example program from The Little Book of
        Semaphores, available from Green Tea Press, greenteapress.com
 
+       This implementation uses semaphores to prevent errors in threads. It 
+       increments each element in an array. 
+
        Copyright 2014 Allen B. Downey
        License: Creative Commons Attribution-ShareAlike 3.0
 
