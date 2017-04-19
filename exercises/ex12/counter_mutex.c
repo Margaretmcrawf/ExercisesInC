@@ -3,6 +3,20 @@
 
        Copyright 2014 Allen B. Downey
        License: Creative Commons Attribution-ShareAlike 3.0
+
+       Time for counter:
+        real    0m1.530s
+        user    0m2.348s
+        sys     0m0.032s
+
+       Time for counter_mutex:
+        real    0m24.801s
+        user    0m24.172s
+        sys     0m23.224s
+
+       counter_mutex is about 24 times slower, which is a huge amount of overhead.
+
+
 */
 
 #include <stdio.h>
