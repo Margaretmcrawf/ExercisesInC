@@ -1,7 +1,7 @@
 /*     This file contains an example program from The Little Book of
        Semaphores, available from Green Tea Press, greenteapress.com
 
-       This implementation uses semaphores to prevent errors in threads. It 
+       This implementation uses a mutex to prevent errors in threads. It 
        increments each element in an array. 
 
        Copyright 2014 Allen B. Downey
@@ -28,6 +28,8 @@
 #include <semaphore.h>
 
 #define NUM_CHILDREN 2
+
+typedef pthread_mutex_t Mutex;
 
 // UTILITY FUNCTIONS
 
@@ -78,6 +80,27 @@ Semaphore *make_semaphore (int n)
     return sem;
 }
 
+Mutex *make_mutex()
+{
+  Mutex *mutex = check_malloc(sizeof(Mutex));
+  int n = pthread_mutex_init(mutex, NULL);
+  if (n != 0) perror_exit("make_lock failed"); 
+  return mutex;
+}
+
+void mutex_lock(Mutex *mutex)
+{
+  int n = pthread_mutex_lock(mutex);
+  if (n != 0) perror_exit("lock failed");
+}
+
+void mutex_unlock(Mutex *mutex)
+{
+  int n = pthread_mutex_unlock(mutex);
+  if (n != 0) perror_exit("unlock failed");
+}
+
+
 /*  sem_signal
  *  
  *  Signals a semaphore.
@@ -97,7 +120,7 @@ typedef struct {
     int counter;
     int end;
     int *array;
-    Semaphore* sem;
+    Mutex *mutex;
 } Shared;
 
 /*  make_shared
@@ -120,7 +143,7 @@ Shared *make_shared (int end)
     for (i=0; i<shared->end; i++) {
         shared->array[i] = 0;
     }
-    shared->sem = make_semaphore(1);
+    shared->mutex = make_mutex();
     return shared;
 }
 
@@ -181,10 +204,10 @@ void child_code (Shared *shared)
 	        return;
 	    }
         
-        sem_wait(shared->sem);
+        mutex_lock(shared->mutex);
 	    shared->array[shared->counter]++;
 	    shared->counter++;
-        sem_signal(shared->sem);
+        mutex_unlock(shared->mutex);
 
 	    if (shared->counter % 100000 == 0) {
 	        printf ("%d\n", shared->counter);
