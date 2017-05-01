@@ -29,6 +29,7 @@ void print_list(Node *head) {
         printf("%d\n", current->val);
         current = current->next;
     }
+    free(current);
 }
 
 int pop(Node **head) {
@@ -41,6 +42,7 @@ int pop(Node **head) {
 
     next_node = (*head)->next;
     retval = (*head)->val;
+    free(head);
     *head = next_node;
 
     return retval;
@@ -71,6 +73,7 @@ int remove_by_value(Node **head, int val) {
 	if (node->next->val == val) {
 	    victim = node->next;
 	    node->next = victim->next;
+        free(victim);
 	    return 1;
 	}
     }
@@ -133,6 +136,16 @@ Node *make_something() {
     return node3;
 }
 
+void free_nodes(Node *list) {
+    Node * current = list;
+    while (current != NULL) {
+        Node* ref = current;
+        current = current->next;
+        free(ref);
+    }
+    list = NULL;
+}
+
 int main() {
     // make a list of even numbers
     Node *test_list = make_node(2, NULL);
@@ -151,6 +164,7 @@ int main() {
 
     printf("test_list\n");
     print_list(test_list);
+    free_nodes(test_list);
 
     // make an empty list
     printf("empty\n");
@@ -159,9 +173,10 @@ int main() {
     // add an element to the empty list
     insert_by_index(&empty, 1, 0);
     print_list(empty);
+    free_nodes(empty);
 
     Node *something = make_something();
-    free(something);
+    free_nodes(something);
 
     return 0;
 }

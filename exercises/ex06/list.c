@@ -172,6 +172,16 @@ void insert(Node **list, int index, int val) {
     current->next = new_node;
 }
 
+void free_nodes(Node *list) {
+    Node * current = list;
+    while (current != NULL) {
+        Node* ref = current;
+        current = current->next;
+        free(ref);
+    }
+    list = NULL;
+}
+
 
 int main() {
     Node *head = make_node(1, NULL);
@@ -210,4 +220,6 @@ int main() {
 
     reverse(list);
     print_list(list);
+
+    free_nodes(*list);
 }
